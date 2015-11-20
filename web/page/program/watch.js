@@ -12,11 +12,11 @@ P = Class.create(P, {
 
 		if (this.program === null) {
 			this.modal = new flagrate.Modal({
-				title: '番組が見つかりません',
-				text : '番組が見つかりません',
+				title: 'PROGRAM NOT FOUND'.__(),
+				text : 'PROGRAM NOT FOUND'.__(),
 				buttons: [
 					{
-						label: 'ダッシュボード',
+						label: 'DASHBOARD'.__(),
 						color: '@pink',
 						onSelect: function(e, modal) {
 							window.location.hash = '!/dashboard/top/';
@@ -57,7 +57,7 @@ P = Class.create(P, {
 		this.view.toolbar.add({
 			key: 'streaming',
 			ui : new sakura.ui.Button({
-				label  : '番組詳細',
+				label  : 'PROGRAM DETAILS'.__(),
 				icon   : './icons/film.png',
 				onClick: function() {
 					window.location.hash = '!/program/view/id=' + program.id + '/';
@@ -82,7 +82,7 @@ P = Class.create(P, {
 		titleHtml += '<span class="id">#' + program.id + '</span>';
 
 		if (program.isManualReserved) {
-			titleHtml = '<span class="flag manual">手動</span>' + titleHtml;
+			titleHtml = '<span class="flag manual">' + 'MANUAL'.__() + '</span>' + titleHtml;
 		}
 
 		setTimeout(function() {
@@ -112,10 +112,10 @@ P = Class.create(P, {
 			disableCloseByMask: true,
 			disableCloseButton: true,
 			target: this.view.content,
-			title : 'ストリーミング再生',
+			title : 'START STREAMING'.__(),
 			buttons: [
 				{
-					label  : '再生',
+					label  : 'PLAYBACK'.__(),
 					color  : '@pink',
 					onSelect: function(e, modal) {
 						if (this.form.validate() === false) { return; }
@@ -126,8 +126,8 @@ P = Class.create(P, {
 
 						if (d.ext === 'm2ts') {
 							new flagrate.Modal({
-								title: 'エラー',
-								text : 'MPEG-2 TSコンテナの再生はサポートしていません。'
+								title: 'ERROR'.__(),
+								text : 'MPEG2 PLAYBACK NOT SUPPORTED'.__()
 							}).show();
 							return;
 						}
@@ -192,7 +192,7 @@ P = Class.create(P, {
 			fields     : [
 				{
 					key  : 'ext',
-					label: 'コンテナ',
+					label: 'CONTAINER'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -201,13 +201,13 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
 						items     : [
 							{
-								label     : '無変換',
+								label     : 'NO CONVERSION'.__(),
 								value     : 'copy',
 								isSelected: set['c:v'] === 'copy'
 							},
@@ -229,7 +229,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -247,7 +247,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -265,7 +265,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -283,13 +283,13 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
 						items     : [
 							{
-								label     : '無変換',
+								label     : 'NO CONVERSION'.__(),
 								value     : 'copy',
 								isSelected: set['c:a'] === 'copy'
 							},
@@ -311,7 +311,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -329,7 +329,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -347,7 +347,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -365,7 +365,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 's',
-					label: 'サイズ',
+					label: 'SIZE'.__(),
 					input: {
 						type      : 'slider',
 						isRequired: true,
@@ -398,7 +398,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'b:v',
-					label: '映像ビットレート',
+					label: 'VIDEO BITRATE'.__(),
 					input: {
 						type      : 'slider',
 						isRequired: true,
@@ -436,7 +436,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'b:a',
-					label: '音声ビットレート',
+					label: 'AUDIO BITRATE'.__(),
 					input: {
 						type      : 'slider',
 						isRequired: true,

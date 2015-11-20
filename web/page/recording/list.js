@@ -1,57 +1,57 @@
 P = Class.create(P, {
-	
+
 	init: function() {
-		
+
 		this.view.content.className = 'loading';
-		
+
 		this.initToolbar();
 		this.draw();
-		
+
 		this.onNotify = this.refresh.bindAsEventListener(this);
 		document.observe('chinachu:recording', this.onNotify);
-		
+
 		return this;
 	}
 	,
 	deinit: function() {
-		
+
 		document.stopObserving('chinachu:recording', this.onNotify);
-		
+
 		return this;
 	}
 	,
 	refresh: function() {
-		
+
 		this.drawMain();
-		
+
 		return this;
 	}
 	,
 	initToolbar: function _initToolbar() {
-		
+
 		return this;
 	}
 	,
 	updateToolbar: function() {
-		
+
 		if (!this.grid) return;
-		
+
 		var selected = this.grid.getSelectedRows();
-		
+
 		if (selected.length === 0) {
-			
+
 		} else if (selected.length === 1) {
-			
+
 		} else {
-			
+
 		}
 	}
 	,
 	draw: function() {
-		
+
 		this.view.content.className = '';
 		this.view.content.update();
-		
+
 		this.grid = new flagrate.Grid({
 			multiSelect  : false,
 			disableSelect: true,
@@ -60,34 +60,34 @@ P = Class.create(P, {
 			cols: [
 				{
 					key  : 'type',
-					label: '放送波',
-					width: 45,
+					label: 'SIGNAL TYPE'.__(),
+					width: 70,
 					align: 'center',
 					disableResize: true
 				},
 				{
 					key  : 'category',
-					label: 'ジャンル',
+					label: 'CATEGORY'.__(),
 					width: 70,
 					align: 'center',
 				},
 				{
 					key  : 'channel',
-					label: 'ch',
+					label: 'CHANNELS'.__(),
 					width: 140
 				},
 				{
 					key  : 'title',
-					label: 'タイトル'
+					label: 'TITLE'.__()
 				},
 				{
 					key  : 'datetime',
-					label: '放送日時',
+					label: 'BROADCAST DATE AND TIME'.__(),
 					width: 210
 				},
 				{
 					key  : 'duration',
-					label: '長さ',
+					label: 'DURATION IN MINUTES'.__(),
 					width: 50,
 					align: 'center',
 				}
@@ -100,32 +100,32 @@ P = Class.create(P, {
 				history.replaceState(null, null, '#' + this.app.pm._lastHash);
 			}.bind(this)
 		}).insertTo(this.view.content);
-		
+
 		if (this.self.query.page) {
 			this.grid.pagePosition = parseInt(this.self.query.page, 10);
 		}
-		
+
 		this.drawMain();
-		
+
 		return this;
 	}
 	,
 	drawMain: function() {
-		
+
 		var rows = [];
-		
+
 		var programs = [];
-		
+
 		for (var i = 0, l = global.chinachu.recording.length; i < l; i++) {
 			programs.push(global.chinachu.recording[i]);
 		}
-		
+
 		programs.sort(function(a, b) {
 			return a.start - b.start;
 		});
-		
+
 		programs.each(function(program, i) {
-			
+
 			var row = {
 				data: program,
 				cell: {
@@ -137,7 +137,7 @@ P = Class.create(P, {
 				},
 				menuItems: [
 					{
-						label   : '録画中止...',
+						label   : 'STOP RECORDING'.__() + '...',
 						icon    : './icons/cross.png',
 						onSelect: function() {
 							new chinachu.ui.StopRecord(program.id);
@@ -145,7 +145,7 @@ P = Class.create(P, {
 					},
 					'------------------------------------------',
 					{
-						label   : 'ルール作成...',
+						label   : 'CREATE RULE'.__() + '...',
 						icon    : './icons/regular-expression.png',
 						onSelect: function() {
 							new chinachu.ui.CreateRuleByProgram(program.id);
@@ -153,12 +153,12 @@ P = Class.create(P, {
 					},
 					'------------------------------------------',
 					{
-						label   : 'ツイート...',
+						label   : 'TWEET'.__() + '...',
 						icon    : 'https://abs.twimg.com/favicons/favicon.ico',
 						onSelect: function() {
 							var left = (screen.width - 640) / 2;
 							var top  = (screen.height - 265) / 2;
-							
+
 							var tweetWindow = window.open(
 								'https://twitter.com/share?url=&text=' + encodeURIComponent(chinachu.util.scotify(program)),
 								'chinachu-tweet-' + program.id,
@@ -168,39 +168,39 @@ P = Class.create(P, {
 					},
 					'------------------------------------------',
 					{
-						label   : 'SCOT形式でコピー...',
+						label   : 'COPY SCOT'.__() + '...',
 						onSelect: function(e) {
-							window.prompt('コピーしてください:', chinachu.util.scotify(program));
+							window.prompt('COPY FOLLOWING'.__(), chinachu.util.scotify(program));
 						}
 					},
 					{
-						label   : 'IDをコピー...',
+						label   : 'COPY ID'.__() + '...',
 						onSelect: function() {
-							window.prompt('コピーしてください:', program.id);
+							window.prompt('COPY FOLLOWING'.__(), program.id);
 						}
 					},
 					{
-						label   : 'タイトルをコピー...',
+						label   : 'COPY TITLE'.__() + '...',
 						onSelect: function() {
-							window.prompt('コピーしてください:', program.title);
+							window.prompt('COPY FOLLOWING'.__(), program.title);
 						}
 					},
 					{
-						label   : '説明をコピー...',
+						label   : 'COPY DESCRIPTION'.__() + '...',
 						onSelect: function() {
-							window.prompt('コピーしてください:', program.detail);
+							window.prompt('COPY FOLLOWING'.__(), program.detail);
 						}
 					},
 					'------------------------------------------',
 					{
-						label   : '関連サイト',
+						label   : 'RELATED SITES'.__(),
 						icon    : './icons/document-page-next.png',
 						onSelect: function() {
 							window.open("https://www.google.com/search?btnI=I'm+Feeling+Lucky&q=" + program.title);
 						}
 					},
 					{
-						label   : 'Google検索',
+						label   : 'GOOGLE SEARCH'.__(),
 						icon    : './icons/ui-search-field.png',
 						onSelect: function() {
 							window.open("https://www.google.com/search?q=" + program.title);
@@ -215,19 +215,19 @@ P = Class.create(P, {
 					}
 				]
 			};
-			
+
 			row.cell.type = {
 				sortAlt  : program.channel.type,
 				className: 'types',
 				html     : '<span class="' + program.channel.type + '">' + program.channel.type + '</span>'
 			};
-			
+
 			row.cell.category = {
 				sortAlt    : program.category,
 				className  : 'categories',
 				html       : '<span class="bg-cat-' + program.category + '">' + program.category + '</span>'
 			};
-			
+
 			row.cell.channel = {
 				sortAlt    : program.channel.id,
 				text       : program.channel.name,
@@ -235,7 +235,7 @@ P = Class.create(P, {
 					title: program.channel.id
 				}
 			};
-			
+
 			var titleHtml = program.flags.invoke('sub', /.+/, '<span class="flag #{0}">#{0}</span>').join('') + program.title;
 			if (program.subTitle && program.title.indexOf(program.subTitle) !== -1) {
 				titleHtml += '<span class="subtitle">' + program.subTitle + '</span>';
@@ -244,11 +244,11 @@ P = Class.create(P, {
 				titleHtml += '<span class="episode">#' + program.episode + '</span>';
 			}
 			titleHtml += '<span class="id">#' + program.id + '</span>';
-			
+
 			if (program.isManualReserved) {
-				titleHtml = '<span class="flag manual">手動</span>' + titleHtml;
+				titleHtml = '<span class="flag manual">' + 'MANUAL'.__() + '</span>' + titleHtml;
 			}
-			
+
 			row.cell.title = {
 				sortAlt    : program.title,
 				html       : titleHtml,
@@ -256,12 +256,12 @@ P = Class.create(P, {
 					title: program.fullTitle + ' - ' + program.detail
 				}
 			};
-			
+
 			row.cell.duration = {
 				sortAlt    : program.seconds,
 				text       : program.seconds / 60 + 'm'
 			};
-			
+
 			row.cell.datetime = {
 				sortAlt    : program.start,
 				element    : new chinachu.ui.DynamicTime({
@@ -270,12 +270,12 @@ P = Class.create(P, {
 					time   : program.start
 				}).entity
 			};
-			
+
 			rows.push(row);
 		});
-		
+
 		this.grid.splice(0, void 0, rows);
-		
+
 		return this;
 	}
 });

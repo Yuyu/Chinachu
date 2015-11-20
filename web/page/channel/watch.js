@@ -10,11 +10,11 @@ P = Class.create(P, {
 
 		if (!this.self.query.id) {
 			this.modal = new flagrate.Modal({
-				title: 'チャンネルが見つかりません',
-				text : 'チャンネルが見つかりません',
+				title: 'CHANNEL NOT FOUND'.__(),
+				text : 'CHANNEL NOT FOUND'.__(),
 				buttons: [
 					{
-						label: 'ダッシュボード',
+						label: 'DASHBOARD'.__(),
 						color: '@pink',
 						onSelect: function(e, modal) {
 							window.location.hash = '!/dashboard/top/';
@@ -61,7 +61,7 @@ P = Class.create(P, {
 		this.view.content.className = 'bg-black';
 		this.view.content.update();
 
-		var titleHtml = "ライブ視聴";
+		var titleHtml = "STREAM".__();
 
 		setTimeout(function() {
 			this.view.title.update(titleHtml);
@@ -71,10 +71,10 @@ P = Class.create(P, {
 			disableCloseByMask: true,
 			disableCloseButton: true,
 			target: this.view.content,
-			title : 'ストリーミング再生',
+			title : 'START STREAMING'.__(),
 			buttons: [
 				{
-					label  : '再生',
+					label  : 'PLAYBACK'.__(),
 					color  : '@pink',
 					onSelect: function(e, modal) {
 						if (this.form.validate() === false) { return; }
@@ -83,8 +83,8 @@ P = Class.create(P, {
 
 						if (d.ext === 'm2ts') {
 							new flagrate.Modal({
-								title: 'エラー',
-								text : 'MPEG-2 TSコンテナの再生はサポートしていません。'
+								title: 'ERROR'.__(),
+								text : 'MPEG2 PLAYBACK NOT SUPPORTED'.__()
 							}).show();
 							return;
 						}
@@ -120,7 +120,7 @@ P = Class.create(P, {
 			fields     : [
 				{
 					key  : 'ext',
-					label: 'コンテナ',
+					label: 'CONTAINER'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -129,13 +129,13 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
 						items     : [
 							{
-								label     : '無変換',
+								label     : 'NO CONVERSION'.__(),
 								value     : 'copy',
 								isSelected: true
 							},
@@ -155,7 +155,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -173,7 +173,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -191,7 +191,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:v',
-					label: '映像コーデック',
+					label: 'VIDEO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -209,13 +209,13 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
 						items     : [
 							{
-								label     : '無変換',
+								label     : 'NO CONVERSION'.__(),
 								value     : 'copy',
 								isSelected: true
 							},
@@ -235,7 +235,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -253,7 +253,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -271,7 +271,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'c:a',
-					label: '音声コーデック',
+					label: 'AUDIO CODEC'.__(),
 					input: {
 						type      : 'radio',
 						isRequired: true,
@@ -289,7 +289,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 's',
-					label: 'サイズ',
+					label: 'SIZE'.__(),
 					input: {
 						type      : 'slider',
 						isRequired: true,
@@ -331,7 +331,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'b:v',
-					label: '映像ビットレート',
+					label: 'VIDEO BITRATE'.__(),
 					input: {
 						type      : 'slider',
 						isRequired: true,
@@ -365,7 +365,7 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'b:a',
-					label: '音声ビットレート',
+					label: 'AUDIO BITRATE'.__(),
 					input: {
 						type      : 'slider',
 						isRequired: true,

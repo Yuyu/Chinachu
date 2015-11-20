@@ -1,34 +1,34 @@
 P = Class.create(P, {
-	
+
 	init: function() {
-		
+
 		this.view.content.className = 'loading';
-		
+
 		this.initToolbar();
 		this.draw();
-		
+
 		this.onNotify = this.refresh.bindAsEventListener(this);
 		document.observe('chinachu:rules', this.onNotify);
-		
+
 		return this;
 	}
 	,
 	deinit: function() {
-		
+
 		document.stopObserving('chinachu:rules', this.onNotify);
-		
+
 		return this;
 	}
 	,
 	refresh: function() {
-		
+
 		this.drawMain();
-		
+
 		return this;
 	}
 	,
 	initToolbar: function _initToolbar() {
-		
+
 		this.view.toolbar.add({
 			key: 'execute-scheduler',
 			ui : new sakura.ui.Button({
@@ -39,9 +39,9 @@ P = Class.create(P, {
 				}.bind(this)
 			})
 		});
-		
+
 		this.view.toolbar.add({ key: '--', ui: new sakura.ui.Element({ tagName: 'hr' }) });
-		
+
 		this.view.toolbar.add({
 			key: 'add',
 			ui : new sakura.ui.Button({
@@ -52,7 +52,7 @@ P = Class.create(P, {
 				}.bind(this)
 			})
 		});
-		
+
 		this.view.toolbar.add({
 			key: 'edit',
 			ui : new sakura.ui.Button({
@@ -63,7 +63,7 @@ P = Class.create(P, {
 				}.bind(this)
 			}).disable()
 		});
-		
+
 		/*this.view.toolbar.add({
 			key: 'copy',
 			ui : new sakura.ui.Button({
@@ -75,14 +75,14 @@ P = Class.create(P, {
 				}.bind(this)
 			}).disable()
 		});*/
-		
+
 		this.view.toolbar.add({
 			key: 'delete',
 			ui : new sakura.ui.Button({
 				label  : 'DELETE'.__(),
 				icon   : './icons/cross-script.png',
 				onClick: function() {
-					
+
 					var selected = this.grid.getSelectedRows();
 					var nums = [];
 					selected.each(function(row) {
@@ -91,60 +91,60 @@ P = Class.create(P, {
 					nums.sort(function (a, b) {
 						return a - b;
 					});
-					
+
 					var modal  = new flagrate.Modal({
-						title: 'ルール削除',
-						text : 'これらの ' + selected.length + ' ルールを削除します',
+						title: 'DELETE RULE'.__(),
+						text : 'REMOVE {0} SELECTED RULES'.__(selected.length.toString(10)),
 						buttons: [
 							{
-								label: '削除',
+								label: 'DELETE'.__(),
 								color: '@red',
 								onSelect: function(e, modal) {
-									
+
 									modal.buttons.each(function(a) {
 										a.button.disable();
 									});
-									
+
 									main();
 								}
 							},
 							{
-								label: 'キャンセル',
+								label: 'CANCEL'.__(),
 								onSelect: function(e, modal) {
 									modal.close();
 								}
 							}
 						]
 					}).show();
-					
+
 					var main = function() {
-						
+
 						document.stopObserving('chinachu:rules', main);
-						
+
 						if (nums.length === 0) {
 							modal.close();
 							return;
 						}
-						
+
 						var num  = nums.pop();
 						console.log(num, nums);
-						
-						modal.content.updateText('ルール#' + num.toString(10) + ' を削除しています...');
-						
+
+						modal.content.updateText('DELETING RULE {0}'.__(num.toString(10)));
+
 						new Ajax.Request('./api/rules/' + num.toString(10) + '.json', {
 							method    : 'delete',
 							onComplete: function() {
 								document.observe('chinachu:rules', main);
 							},
 							onSuccess: function() {
-								
-								modal.content.updateText('ルール#' + num.toString(10) + ' を削除しました');
+
+								modal.content.updateText('SUCCESSFULLY DELETED RULE {0}'.__(num.toString(10)));
 							},
 							onFailure: function(t) {
-								
+
 								new flagrate.Modal({
-									title: '失敗',
-									text : 'ルール#' + num.toString(10) + ' の削除に失敗しました (' + t.status + ')'
+									title: 'FAILURE'.__(),
+									text : 'FAILED TO DELETE RULE {0} REASON {1}'.__([num.toString(10), t.status])
 								}).show();
 							}
 						});
@@ -152,16 +152,16 @@ P = Class.create(P, {
 				}.bind(this)
 			}).disable()
 		});
-		
+
 		return this;
 	}
 	,
 	updateToolbar: function() {
-		
+
 		if (!this.grid) return;
-		
+
 		var selected = this.grid.getSelectedRows();
-		
+
 		if (selected.length === 0) {
 			this.view.toolbar.one('edit').disable();
 			//this.view.toolbar.one('copy').disable();
@@ -177,10 +177,10 @@ P = Class.create(P, {
 	}
 	,
 	draw: function() {
-		
+
 		this.view.content.className = '';
 		this.view.content.update();
-		
+
 		this.grid = new flagrate.Grid({
 			multiSelect: true,
 			pagination : true,
@@ -194,63 +194,63 @@ P = Class.create(P, {
 				},
 				{
 					key  : 'types',
-					label: '放送波',
+					label: 'SIGNAL TYPE'.__(),
 					width: 70
 				},
 				{
 					key  : 'categories',
-					label: 'ジャンル',
+					label: 'CATEGORY'.__(),
 					width: 70
 				},
 				{
 					key  : 'channels',
-					label: 'ch',
-					width: 70
+					label: 'CHANNELS'.__(),
+					width: 95
 				},
 				{
 					key  : 'ignore_channels',
-					label: '無視ch',
-					width: 70
+					label: 'IGNORE CHANNELS'.__(),
+					width: 95
 				},
 				{
 					key  : 'reserve_flags',
-					label: 'フラグ',
-					width: 60
+					label: 'FLAGS'.__(),
+					width: 75
 				},
 				{
 					key  : 'ignore_flags',
-					label: '無視ﾌﾗｸﾞ',
-					width: 60
+					label: 'IGNORE FLAGS'.__(),
+					width: 75
 				},
 				{
 					key  : 'hour',
-					label: '時間帯',
-					width: 55
-				},
-				{
-					key  : 'duration',
-					label: '長さ(分)',
+					label: 'TIMEFRAME'.__(),
 					width: 70
 				},
 				{
+					key  : 'duration',
+					label: 'DURATION IN MINUTES'.__(),
+					width: 85
+				},
+				{
 					key  : 'reserve_titles',
-					label: '対象タイトル'
+					label: 'TARGET TITLE'.__()
 				},
 				{
 					key  : 'ignore_titles',
-					label: '無視タイトル'
+					label: 'IGNORE TITLE'.__()
 				},
 				{
 					key  : 'reserve_descriptions',
-					label: '対象説明文'
+					label: 'TARGET DESCRIPTION'.__()
 				},
 				{
 					key  : 'ignore_descriptions',
-					label: '無視説明文'
+					label: 'IGNORE DESCRIPTION'.__()
 				},
 				{
 					key  : 'recorded_format',
-					label: '録画ファイル名フォーマット'
+					label: 'FILE NAME FORMAT'.__()
 				}
 			],
 			onSelect  : this.updateToolbar.bind(this),
@@ -259,18 +259,18 @@ P = Class.create(P, {
 				new chinachu.ui.EditRule(global.chinachu.rules.indexOf(row.data));
 			}.bind(this)
 		}).insertTo(this.view.content);
-		
+
 		this.drawMain();
-		
+
 		return this;
 	}
 	,
 	drawMain: function() {
-		
+
 		var rows = [];
-		
+
 		global.chinachu.rules.each(function(rule, i) {
-			
+
 			var row = {
 				data: rule,
 				cell: {
@@ -280,9 +280,9 @@ P = Class.create(P, {
 					}
 				}
 			};
-			
+
 			if (rule.isDisabled) row.className = 'disabled';
-			
+
 			if (rule.types) {
 				row.cell.types = {
 					sortKey  : rule.types[0],
@@ -296,7 +296,7 @@ P = Class.create(P, {
 					text     : 'any'
 				};
 			}
-			
+
 			if (rule.categories) {
 				row.cell.categories = {
 					sortKey    : rule.categories[0],
@@ -311,7 +311,7 @@ P = Class.create(P, {
 					text     : 'any'
 				};
 			}
-			
+
 			if (rule.channels) {
 				row.cell.channels = {
 					text       : rule.channels.join(', '),
@@ -324,7 +324,7 @@ P = Class.create(P, {
 					text     : 'any'
 				};
 			}
-			
+
 			if (rule.ignore_channels) {
 				row.cell.ignore_channels = {
 					text       : rule.ignore_channels.join(', '),
@@ -337,7 +337,7 @@ P = Class.create(P, {
 					text     : 'none'
 				};
 			}
-			
+
 			if (rule.reserve_flags) {
 				row.cell.reserve_flags = {
 					text       : rule.reserve_flags.join(', '),
@@ -350,7 +350,7 @@ P = Class.create(P, {
 					text     : 'any'
 				};
 			}
-			
+
 			if (rule.ignore_flags) {
 				row.cell.ignore_flags = {
 					text       : rule.ignore_flags.join(', '),
@@ -363,7 +363,7 @@ P = Class.create(P, {
 					text     : 'none'
 				};
 			}
-			
+
 			if (rule.hour) {
 				row.cell.hour = {
 					sortKey  : rule.hour.start || 0,
@@ -376,7 +376,7 @@ P = Class.create(P, {
 					text     : 'all'
 				};
 			}
-			
+
 			if (rule.duration) {
 				row.cell.duration = {
 					sortKey  : rule.duration.min || 0,
@@ -392,7 +392,7 @@ P = Class.create(P, {
 					text     : 'all'
 				};
 			}
-			
+
 			if (rule.reserve_titles) {
 				row.cell.reserve_titles = {
 					text       : rule.reserve_titles.join(', '),
@@ -405,7 +405,7 @@ P = Class.create(P, {
 					text     : 'any'
 				};
 			}
-			
+
 			if (rule.ignore_titles) {
 				row.cell.ignore_titles = {
 					text       : rule.ignore_titles.join(', '),
@@ -418,7 +418,7 @@ P = Class.create(P, {
 					text     : 'none'
 				};
 			}
-			
+
 			if (rule.reserve_descriptions) {
 				row.cell.reserve_descriptions = {
 					text       : rule.reserve_descriptions.join(', '),
@@ -431,7 +431,7 @@ P = Class.create(P, {
 					text     : 'any'
 				};
 			}
-			
+
 			if (rule.ignore_descriptions) {
 				row.cell.ignore_descriptions = {
 					text       : rule.ignore_descriptions.join(', '),
@@ -457,14 +457,14 @@ P = Class.create(P, {
 					text     : 'default'
 				};
 			}
-			
+
 			rows.push(row);
 		});
-		
+
 		this.grid.splice(0, void 0, rows).each(function(row) {
 			this.grid.deselect(row);
 		}.bind(this));
-		
+
 		return this;
 	}
 });
