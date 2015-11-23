@@ -583,7 +583,7 @@
 									var conflictMsg = '';
 									var title = 'SUCCESS'.__();
 									if (Array.isArray(json.conflicts) && json.conflicts.length > 0) {
-										conflictMsg = '{0} CONFLICTS'.__(json.conflicts.length);
+										conflictMsg = '{0} CONFLICTS'.__(json.conflicts.length.toString());
 										title = 'CONFLICT DETECTION'.__();
 									}
 									new flagrate.Modal({
