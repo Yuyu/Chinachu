@@ -229,6 +229,13 @@ P = Class.create(P, {
 					body        : 'AUTOMATIC RECORDING SKIPPED'.__(),
 					disableClose: true
 				}).render(this.view.content);
+			} else if (program.isConflict) {
+				new sakura.ui.Alert({
+					title       : '競合',
+					type        : 'red',
+					body        : 'この番組は録画予約されていますが、競合のため録画されません',
+					disableClose: true
+				}).render(this.view.content);
 			} else {
 				new sakura.ui.Alert({
 					title       : 'RESERVES'.__(),

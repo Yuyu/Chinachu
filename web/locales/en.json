@@ -127,20 +127,22 @@
   "SUSPEND"                         : "Suspend",
   "ERROR"                           : "Error",
   "PROGRAM NOT FOUND"               : "Program not found",
-  "RESERVATION SET"                 : "The reservation has been set",
+  "RESERVATION SET"                 : "The reservation has been set. It is recommended to execute the scheduler to see if there are any conflicts",
   "RESERVATION FAILED {0}"          : "Setting the reservation has failed ({0})",
   "1SEG RESERVATION"                : "Reserve (1seg)",
   "MANUAL RESERVATION"              : "Manual reservation",
   "RESERVATION CONFIRMATION"        : "Do you really wish to set this reservation?",
   "CANCEL MANUAL RESERVATION"       : "Cancel manual reservation",
   "CANCEL RESERVATION CONFIRMATION" : "Do you really wish to cancel this manual reservation?",
+  "RESERVATION CANCELLED"           : "The reservation has been cancelled. You need to execute the scheduler in order to resolve conflicts",
+  "RESERVATION CANCEL FAILED"       : "Failed to cancel the reservation",
 
   "AUTOMATIC RESERVATION SKIP CONFIRMATION" : "Are you sure you want to skip this reservation, which was set by a rule?",
-  "SKIP ENABLED"                            : "The reservation has been skipped",
+  "SKIP ENABLED"                            : "The reservation has been skipped. You need to execute the scheduler in order to resolve conflicts",
   "SKIP FAILED {0}"                         : "Failed to skip reservation ({0})",
   "CANCEL SKIP"                             : "Cancel skip",
   "CANCEL SKIP CONFIRMATION"                : "Do you really wish to undo the skip?",
-  "SKIP CANCELLED"                          : "The reservation has been unskipped",
+  "SKIP CANCELLED"                          : "The reservation has been unskipped. It is recommended to execute the scheduler to see if there are any conflicts",
   "SKIP CANCEL FAILED {0}"                  : "Unskipping the reservation has failed ({0})",
 
   "ARE YOU SURE"    : "Are you sure?",
@@ -235,5 +237,9 @@
   "PROGRAM ID"              : "Program ID",
   "CHANNEL ID"              : "Channel ID",
 
-  "CHANNEL NOT FOUND"       : "Channel not found"
+  "CHANNEL NOT FOUND"       : "Channel not found",
+
+  "CONFLICT DETECTION"  : "Conflict detection",
+  "{0} CONFLICTS"       : ", but there are {0} reservations that conflict with this",
+  "CONFLICT"            : "Conflict"
 }

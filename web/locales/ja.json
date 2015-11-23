@@ -127,20 +127,22 @@
   "SUSPEND"                         : "中止",
   "ERROR"                           : "エラー",
   "PROGRAM NOT FOUND"               : "番組が見つかりませんでした",
-  "RESERVATION SET"                 : "予約しました",
+  "RESERVATION SET"                 : "予約しました。競合を確認するためスケジューラを実行することをお勧めします",
   "RESERVATION FAILED {0}"          : "予約に失敗しました ({0})",
   "1SEG RESERVATION"                : "予約 (ワンセグ)",
   "MANUAL RESERVATION"              : "手動予約",
   "RESERVATION CONFIRMATION"        : "予約しますか？",
   "CANCEL MANUAL RESERVATION"       : "手動予約の取消",
   "CANCEL RESERVATION CONFIRMATION" : "予約を取り消しますか？",
+  "RESERVATION CANCELLED"           : "予約を取り消しました。競合を解決するにはスケジューラを実行する必要があります",
+  "RESERVATION CANCEL FAILED"       : "予約の取消に失敗しました",
 
   "AUTOMATIC RESERVATION SKIP CONFIRMATION" : "自動予約された今回の番組をスキップしますか？",
-  "SKIP ENABLED"                            : "スキップを有効にしました",
+  "SKIP ENABLED"                            : "スキップを有効にしました。競合を解決するにはスケジューラを実行する必要があります",
   "SKIP FAILED {0}"                         : "スキップを取り消しました",
   "SKIP CANCEL FAILED {0}"                  : "スキップの取消に失敗しました ({0})",
   "CANCEL SKIP CONFIRMATION"                : "スキップを取り消しますか？",
-  "SKIP CANCELLED"                          : "スキップを取り消しました",
+  "SKIP CANCELLED"                          : "スキップを取り消しました。スケジューラーを実行して競合を確認することをお勧めします",
   "SKIP CANCEL FAILED {0}"                  : "スキップの取消に失敗しました ({0})",
 
   "ARE YOU SURE"    : "本当によろしいですか？",
@@ -235,5 +237,9 @@
   "PROGRAM ID"              : "プログラムID",
   "CHANNEL ID"              : "チャンネルID",
 
-  "CHANNEL NOT FOUND"       : "チャンネルが見つかりません"
+  "CHANNEL NOT FOUND"       : "チャンネルが見つかりません",
+
+  "CONFLICT DETECTION"  : "競合検出",
+  "{0} CONFLICTS"       : "。競合が{0}件ありました",
+  "CONFLICT"            : "競合"
 }

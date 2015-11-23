@@ -271,7 +271,10 @@ P = Class.create(P, {
 					});
 				}
 			}
-
+			if (program.isConflict) {
+				titleHtml = '<span class="flag conflict">' + 'CONFLICT'.__() + '</span>' + titleHtml;
+				row.className += ' disabled';
+			}
 			row.cell.title = {
 				sortAlt    : program.title,
 				html       : titleHtml,

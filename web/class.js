@@ -578,10 +578,17 @@
 								onComplete: function () {
 									modal.close();
 								},
-								onSuccess: function () {
+								onSuccess: function (response) {
+									var json = response.responseJSON;
+									var conflictMsg = '';
+									var title = 'SUCCESS'.__();
+									if (Array.isArray(json.conflicts) && json.conflicts.length > 0) {
+										conflictMsg = '{0} CONFLICTS'.__(json.conflicts.length);
+										title = 'CONFLICT DETECTION'.__();
+									}
 									new flagrate.Modal({
 										title: 'SUCCESS'.__(),
-										text : 'SCHEDULER SUCCESS'.__()
+										text : 'SCHEDULER SUCCESS'.__() + conflictMsg
 									}).show();
 								},
 								onFailure: function (t) {
@@ -739,13 +746,13 @@
 									onSuccess: function () {
 										new flagrate.Modal({
 											title: 'SUCCESS'.__(),
-											text : 'RESERVATION SET'.__()
+											text : 'RESERVATION CANCELLED'.__()
 										}).show();
 									},
 									onFailure: function (t) {
 										new flagrate.Modal({
 											title: 'FAILURE'.__(),
-											text : 'RESERVATION FAILED {0}'.__(t.status)
+											text : 'RESERVATION CANCEL FAILED {0}'.__(t.status)
 										}).show();
 									}
 								});
