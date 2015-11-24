@@ -128,23 +128,89 @@
 				}).disable()
 			});
 
-			var i;
-			for (i = 0; i < 7; i++){
-				if (i > 0){
-					date.add(one_day);
-				}
-				this.view.toolbar.add({
-					key: 'day+' + i.toString(),
-					ui : new sakura.ui.Button({
-						className: 'day',
-						label  : ((i == 0) ? date.format('MM/') : '') + date.format('DD(') + days[parseInt(date.format('d'))] + ')' + ((i == 0) ? date.format(' HH時~') : ''),
-						onClick: function (i) {
-							this.self.query.day = i.toString();
-							location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-						}.bind(this)
-					})
-				});
-			}
+			this.view.toolbar.add({
+				key: 'day+0',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('MM/DD(') + days[parseInt(date.format('d'))] + date.format(') HH時~'),
+					onClick: function () {
+						this.self.query.day = '0';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
+			date.add(one_day);
+			this.view.toolbar.add({
+				key: 'day+1',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
+					onClick: function () {
+						this.self.query.day = '1';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
+			date.add(one_day);
+			this.view.toolbar.add({
+				key: 'day+2',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
+					onClick: function () {
+						this.self.query.day = '2';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
+			date.add(one_day);
+			this.view.toolbar.add({
+				key: 'day+3',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
+					onClick: function () {
+						this.self.query.day = '3';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
+			date.add(one_day);
+			this.view.toolbar.add({
+				key: 'day+4',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
+					onClick: function () {
+						this.self.query.day = '4';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
+			date.add(one_day);
+			this.view.toolbar.add({
+				key: 'day+5',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
+					onClick: function () {
+						this.self.query.day = '5';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
+			date.add(one_day);
+			this.view.toolbar.add({
+				key: 'day+6',
+				ui : new sakura.ui.Button({
+					className: 'day',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
+					onClick: function () {
+						this.self.query.day = '6';
+						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+					}.bind(this)
+				})
+			});
 
 			this.view.toolbar.add({
 				key: 'config',
