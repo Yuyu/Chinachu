@@ -460,17 +460,17 @@
 
 			var i, lim;
 			for (i = this.time, lim = this.time + 60000 * 12000; maxlen > i && lim > i; i += 60000) {
-				var date = new Date(i);
-				var d    = date.getDate();
-				var m    = date.getMinutes();
+				var date = moment(i).tz('Asia/Tokyo');
+				var d    = date.date();
+				var m    = date.minute();
 
 				if ((m === 0) && (lm !== m) && (ld === d)) {
 					lm = m;
 
 					this.view.timescale.insert(
-						flagrate.createElement('div', { 'class': 'long h' + date.getHours() }).setStyle({
+						flagrate.createElement('div', { 'class': 'long h' + date.hour() }).setStyle({
 							top: ((i - this.time) / 1000 / 1000 * unitlen) + 'px'
-						}).insert(date.getHours())
+						}).insert(date.hour())
 					);
 				}
 
