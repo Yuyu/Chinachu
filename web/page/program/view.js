@@ -266,7 +266,7 @@ P = Class.create(P, {
 
 		var meta = new flagrate.Element('div', { 'class': 'program-meta' }).update(
 			' &ndash; ' +
-			dateFormat(new Date(program.end), 'HH:MM') +
+			moment(program.end).tz('Asia/Tokyo').format('HH:mm') +
 			' (' + (program.seconds / 60) + "MINUTES".__() + ')<br>' +
 			'<small><span class="bg-cat-' + program.category + '">' + program.category + '</span> / ' + program.channel.type + ': ' +
 			'<a href="#!/search/top/skip=1&chid=' + program.channel.id + '/">' + program.channel.name + '</a>' +

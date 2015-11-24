@@ -53,14 +53,7 @@
 	var dateToString = chinachu.dateToString = function _dateToString(date, type) {
 		var d = date;
 
-		var dStr = [
-			d.getFullYear(),
-			(d.getMonth() + 1).toPaddedString(2),
-			d.getDate().toPaddedString(2)
-		].join('/') + ' ' + [
-			d.getHours().toPaddedString(2),
-			d.getMinutes().toPaddedString(2)
-		].join(':');
+		var dStr = moment(date).tz('Asia/Tokyo').format('YYYY/MM/DD HH:mm');
 
 		var dDelta = ((new Date().getTime() - d.getTime()) / 1000);
 		var dDeltaStr = '';

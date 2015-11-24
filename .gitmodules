@@ -13,3 +13,11 @@
 [submodule "web/lib/crossfilter"]
 	path = web/lib/crossfilter
 	url = https://github.com/square/crossfilter
+[submodule "web/lib/moment"]
+	path = web/lib/moment
+	url = https://github.com/moment/moment.git
+	branch = master
+[submodule "web/lib/moment-timezone"]
+	path = web/lib/moment-timezone
+	url = https://github.com/moment/moment-timezone.git
+	branch = master

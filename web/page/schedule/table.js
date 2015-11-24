@@ -47,8 +47,8 @@
 		},
 
 		initToolbar: function () {
-
-			var date = new Date(this.time);
+			var date = moment(this.time).tz('Asia/Tokyo');
+			var one_day = moment.duration(1, 'days');
 			var days = ['SUNDAY'.__(), 'MONDAY'.__(), 'TUESDAY'.__(), 'WEDNESDAY'.__(), 'THURSDAY'.__(), 'FRIDAY'.__(), 'SATURDAY'.__()];
 
 			this.view.toolbar.add({
@@ -131,73 +131,79 @@
 				key: 'day+0',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (date.getMonth() + 1) + '/' + date.getDate() + '(' + days[date.getDay()] + ') ' + date.getHours() + 'HOUR'.__(),
+					label  : date.format('MM/DD(') + days[parseInt(date.format('d'))] + date.format(') HH') + 'HOUR'.__(),
 					onClick: function () {
 						this.self.query.day = '0';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
 					}.bind(this)
 				})
 			});
+			date.add(one_day);
 			this.view.toolbar.add({
 				key: 'day+1',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (new Date(this.time + 86400000).getDate()) + '(' + days[new Date(this.time + 86400000).getDay()] + ')',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
 					onClick: function () {
 						this.self.query.day = '1';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
 					}.bind(this)
 				})
 			});
+			date.add(one_day);
 			this.view.toolbar.add({
 				key: 'day+2',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (new Date(this.time + 172800000).getDate()) + '(' + days[new Date(this.time + 172800000).getDay()] + ')',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
 					onClick: function () {
 						this.self.query.day = '2';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
 					}.bind(this)
 				})
 			});
+			date.add(one_day);
 			this.view.toolbar.add({
 				key: 'day+3',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (new Date(this.time + 259200000).getDate()) + '(' + days[new Date(this.time + 259200000).getDay()] + ')',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
 					onClick: function () {
 						this.self.query.day = '3';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
 					}.bind(this)
 				})
 			});
+			date.add(one_day);
 			this.view.toolbar.add({
 				key: 'day+4',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (new Date(this.time + 345600000).getDate()) + '(' + days[new Date(this.time + 345600000).getDay()] + ')',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
 					onClick: function () {
 						this.self.query.day = '4';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
 					}.bind(this)
 				})
 			});
+			date.add(one_day);
 			this.view.toolbar.add({
 				key: 'day+5',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (new Date(this.time + 432000000).getDate()) + '(' + days[new Date(this.time + 432000000).getDay()] + ')',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
 					onClick: function () {
 						this.self.query.day = '5';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
 					}.bind(this)
 				})
 			});
+			date.add(one_day);
 			this.view.toolbar.add({
 				key: 'day+6',
 				ui : new sakura.ui.Button({
 					className: 'day',
-					label  : (new Date(this.time + 518400000).getDate()) + '(' + days[new Date(this.time + 518400000).getDay()] + ')',
+					label  : date.format('DD(') + days[parseInt(date.format('d'))] + ')',
 					onClick: function () {
 						this.self.query.day = '6';
 						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
@@ -453,17 +459,17 @@
 
 			var i, lim;
 			for (i = this.time, lim = this.time + 60000 * 12000; maxlen > i && lim > i; i += 60000) {
-				var date = new Date(i);
-				var d    = date.getDate();
-				var m    = date.getMinutes();
+				var date = moment(i).tz('Asia/Tokyo');
+				var d    = date.date();
+				var m    = date.minute();
 
 				if ((m === 0) && (lm !== m) && (ld === d)) {
 					lm = m;
 
 					this.view.timescale.insert(
-						flagrate.createElement('div', { 'class': 'long h' + date.getHours() }).setStyle({
+						flagrate.createElement('div', { 'class': 'long h' + date.hour() }).setStyle({
 							top: ((i - this.time) / 1000 / 1000 * unitlen) + 'px'
-						}).insert(date.getHours())
+						}).insert(date.hour())
 					);
 				}
 
@@ -549,7 +555,7 @@
 				this.view.drawerHead.update();
 
 				flagrate.createElement('div', {'class': 'date'}).insertText(
-					dateFormat(this.data.target.start, 'mm/dd HH:MM')
+					moment(this.data.target.start).tz('Asia/Tokyo').format('MM/DD HH:mm')
 				).insert(
 					flagrate.createElement('small').insert('&plus;' + (this.data.target.seconds / 60) + 'min')
 				).insertTo(this.view.drawerHead);
@@ -846,7 +852,7 @@
 					(a.posY < bottom || a.posY + a.height < bottom)
 				) {
 					if (typeof a._rect === 'undefined') {
-						var date = new Date(a.program.start);
+						var date = moment(a.program.start).tz('Asia/Tokyo');
 
 						a._rect              = flagrate.createElement('div');
 						a._rect.className    = 'rect bg-cat-' + a.program.category + ((this.categories.indexOf(a.program.category) === -1) ? ' muted' : '');
@@ -857,7 +863,7 @@
 
 						a._label = flagrate.createElement('div').insert(
 							flagrate.createElement('h4').insertText(
-								date.getHours().toPaddedString(2) + ':' + date.getMinutes().toPaddedString(2) + ' ' + a.program.title
+								date.hour().toPaddedString(2) + ':' + date.minute().toPaddedString(2) + ' ' + a.program.title
 							)
 						).insert(
 							flagrate.createElement('div').insert(

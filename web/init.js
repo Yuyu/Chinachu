@@ -52,6 +52,10 @@
 		/* date.format */
 		'./lib/date.format.js',
 
+		/* moment, moment-timezone */
+		'./lib/moment/min/moment.min.js',
+		'./lib/moment-timezone/builds/moment-timezone-with-data.min.js',
+
 		/* chinachu */
 		'./chinachu.css',
 		'./class.js'
