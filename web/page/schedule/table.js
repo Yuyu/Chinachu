@@ -556,7 +556,7 @@
 				this.view.drawerHead.update();
 
 				flagrate.createElement('div', {'class': 'date'}).insertText(
-					dateFormat(this.data.target.start, 'mm/dd HH:MM')
+					moment(this.data.target.start).tz('Asia/Tokyo').format('MM/DD HH:mm')
 				).insert(
 					flagrate.createElement('small').insert('&plus;' + (this.data.target.seconds / 60) + 'min')
 				).insertTo(this.view.drawerHead);
@@ -853,7 +853,7 @@
 					(a.posY < bottom || a.posY + a.height < bottom)
 				) {
 					if (typeof a._rect === 'undefined') {
-						var date = new Date(a.program.start);
+						var date = moment(a.program.start).tz('Asia/Tokyo');
 
 						a._rect              = flagrate.createElement('div');
 						a._rect.className    = 'rect bg-cat-' + a.program.category + ((this.categories.indexOf(a.program.category) === -1) ? ' muted' : '');
@@ -864,7 +864,7 @@
 
 						a._label = flagrate.createElement('div').insert(
 							flagrate.createElement('h4').insertText(
-								date.getHours().toPaddedString(2) + ':' + date.getMinutes().toPaddedString(2) + ' ' + a.program.title
+								date.hour().toPaddedString(2) + ':' + date.minute().toPaddedString(2) + ' ' + a.program.title
 							)
 						).insert(
 							flagrate.createElement('div').insert(
