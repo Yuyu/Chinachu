@@ -48,7 +48,8 @@
 
 		initToolbar: function () {
 
-			var date = moment(this.time).tz('Asia/Tokyo').toDate();
+			var date = moment(this.time).tz('Asia/Tokyo');
+			var one_day = moment.duration(1, 'days');
 			var days = ['日', '月', '火', '水', '木', '金', '土'];
 
 			this.view.toolbar.add({
@@ -127,83 +128,23 @@
 				}).disable()
 			});
 
-			this.view.toolbar.add({
-				key: 'day+0',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (date.getMonth() + 1) + '/' + date.getDate() + '(' + days[date.getDay()] + ') ' + date.getHours() + '時~',
-					onClick: function () {
-						this.self.query.day = '0';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
-			this.view.toolbar.add({
-				key: 'day+1',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (new Date(this.time + 86400000).getDate()) + '(' + days[new Date(this.time + 86400000).getDay()] + ')',
-					onClick: function () {
-						this.self.query.day = '1';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
-			this.view.toolbar.add({
-				key: 'day+2',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (new Date(this.time + 172800000).getDate()) + '(' + days[new Date(this.time + 172800000).getDay()] + ')',
-					onClick: function () {
-						this.self.query.day = '2';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
-			this.view.toolbar.add({
-				key: 'day+3',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (new Date(this.time + 259200000).getDate()) + '(' + days[new Date(this.time + 259200000).getDay()] + ')',
-					onClick: function () {
-						this.self.query.day = '3';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
-			this.view.toolbar.add({
-				key: 'day+4',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (new Date(this.time + 345600000).getDate()) + '(' + days[new Date(this.time + 345600000).getDay()] + ')',
-					onClick: function () {
-						this.self.query.day = '4';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
-			this.view.toolbar.add({
-				key: 'day+5',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (new Date(this.time + 432000000).getDate()) + '(' + days[new Date(this.time + 432000000).getDay()] + ')',
-					onClick: function () {
-						this.self.query.day = '5';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
-			this.view.toolbar.add({
-				key: 'day+6',
-				ui : new sakura.ui.Button({
-					className: 'day',
-					label  : (new Date(this.time + 518400000).getDate()) + '(' + days[new Date(this.time + 518400000).getDay()] + ')',
-					onClick: function () {
-						this.self.query.day = '6';
-						location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
-					}.bind(this)
-				})
-			});
+			var i;
+			for (i = 0; i < 7; i++){
+				if (i > 0){
+					date.add(one_day);
+				}
+				this.view.toolbar.add({
+					key: 'day+' + i.toString(),
+					ui : new sakura.ui.Button({
+						className: 'day',
+						label  : ((i == 0) ? date.format('MM/') : '') + date.format('DD(') + days[parseInt(date.format('d'))] + ')' + ((i == 0) ? date.format(' HH時~') : ''),
+						onClick: function (i) {
+							this.self.query.day = i.toString();
+							location.hash = '!/schedule/table/' + Object.toQueryString(this.self.query) + '/';
+						}.bind(this)
+					})
+				});
+			}
 
 			this.view.toolbar.add({
 				key: 'config',
@@ -453,7 +394,7 @@
 
 			var i, lim;
 			for (i = this.time, lim = this.time + 60000 * 12000; maxlen > i && lim > i; i += 60000) {
-				var date = moment(i).tz('Asia/Tokyo').toDate();
+				var date = new Date(i);
 				var d    = date.getDate();
 				var m    = date.getMinutes();
 
@@ -846,7 +787,7 @@
 					(a.posY < bottom || a.posY + a.height < bottom)
 				) {
 					if (typeof a._rect === 'undefined') {
-						var date = moment(a.program.start).tz('Asia/Tokyo').toDate();
+						var date = new Date(a.program.start);
 
 						a._rect              = flagrate.createElement('div');
 						a._rect.className    = 'rect bg-cat-' + a.program.category + ((this.categories.indexOf(a.program.category) === -1) ? ' muted' : '');
