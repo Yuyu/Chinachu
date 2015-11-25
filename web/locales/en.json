@@ -241,5 +241,10 @@
 
   "CONFLICT DETECTION"  : "Conflict detection",
   "{0} CONFLICTS"       : ", but there are {0} reservations that conflict with this",
-  "CONFLICT"            : "Conflict"
+  "CONFLICT"            : "Conflict",
+
+  "RECORDING STARTED"   : "Recording started",
+  "RECORDING FINISHED"  : "Recording finished",
+  "SHORTLY"             : "Coming up soon",
+  "BROADCAST STARTED"   : "Broadcast started"
 }

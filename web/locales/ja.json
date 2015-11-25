@@ -241,5 +241,10 @@
 
   "CONFLICT DETECTION"  : "競合検出",
   "{0} CONFLICTS"       : "。競合が{0}件ありました",
-  "CONFLICT"            : "競合"
+  "CONFLICT"            : "競合",
+
+  "RECORDING STARTED"   : "録画開始",
+  "RECORDING FINISHED"  : "録画終了",
+  "SHORTLY"             : "まもなく",
+  "BROADCAST STARTED"   : "放送開始"
 }
