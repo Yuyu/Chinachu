@@ -141,7 +141,7 @@
 							program._it.insert(program._progress);
 						}
 
-						var html = flagrate.createElement('div').insert('<b>' + program.fullTitle + '</b><br>').insertText(program.detail || '(説明なし)');
+						var html = flagrate.createElement('div').insert('<b>' + program.fullTitle + '</b><br>').insertText(program.detail || '(' + 'NO DESCRIPTION'.__() + ')');
 
 						var contextMenuItems = [
 							{
