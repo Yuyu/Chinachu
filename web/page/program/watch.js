@@ -108,31 +108,6 @@ P = Class.create(P, {
 			set['b:a'] = '96k';
 		}
 
-<<<<<<< HEAD
-		var modal = this.modal = new flagrate.Modal({
-			disableCloseByMask: true,
-			disableCloseButton: true,
-			target: this.view.content,
-			title : 'START STREAMING'.__(),
-			buttons: [
-				{
-					label  : 'PLAYBACK'.__(),
-					color  : '@pink',
-					onSelect: function(e, modal) {
-						if (this.form.validate() === false) { return; }
-
-						var d = this.d = this.form.result();
-
-						saveSettings(d);
-
-						if (d.ext === 'm2ts') {
-							new flagrate.Modal({
-								title: 'ERROR'.__(),
-								text : 'MPEG2 PLAYBACK NOT SUPPORTED'.__()
-							}).show();
-							return;
-						}
-=======
 		var buttons = [
 			{
 				label  : '再生',
@@ -146,12 +121,11 @@ P = Class.create(P, {
 
 					if (d.ext === 'm2ts') {
 						new flagrate.Modal({
-							title: 'エラー',
-							text : 'MPEG-2 TSコンテナの再生はサポートしていません。'
+							title: 'ERROR'.__(),
+							text : 'MPEG2 PLAYBACK NOT SUPPORTED'
 						}).show();
 						return;
 					}
->>>>>>> master
 
 					modal.close();
 
@@ -182,7 +156,7 @@ P = Class.create(P, {
 		];
 		if (! program._isRecording) {
 			buttons.push({
-				label: 'ダウンロード',
+				label: 'DOWNLOAD'.__(),
 				color: '@blue',
 				onSelect: function(e, model) {
 
@@ -202,7 +176,7 @@ P = Class.create(P, {
 			disableCloseByMask: true,
 			disableCloseButton: true,
 			target: this.view.content,
-			title : 'ストリーミング再生',
+			title : 'START STREAMING'.__(),
 			buttons: buttons
 		}).show();
 
