@@ -102,7 +102,8 @@ P = Class.create(P, {
 
 						var d = this.form.result();
 
-						d.prefix = window.location.protocol + '//' + window.location.host + '/api/channel/' + this.channelId + '/';
+						d.prefix = window.location.protocol + '//' + window.location.host;
+						d.prefix += window.location.pathname.replace(/\/[^\/]*$/, '') + '/api/channel/' + this.channelId + '/';
 						window.open('./api/channel/' + this.channelId + '/watch.xspf?' + Object.toQueryString(d));
 					}.bind(this)
 				}
@@ -221,7 +222,7 @@ P = Class.create(P, {
 							},
 							{
 								label     : 'AAC',
-								value     : 'libfdk_aac'
+								value     : 'aac'
 							},
 							{
 								label     : 'Vorbis',
@@ -249,42 +250,6 @@ P = Class.create(P, {
 					},
 					depends: [
 						{ key: 'ext', value: 'webm' }
-					]
-				},
-				{
-					key  : 'c:a',
-					label: 'AUDIO CODEC'.__(),
-					input: {
-						type      : 'radio',
-						isRequired: true,
-						items     : [
-							{
-								label     : 'AAC',
-								value     : 'libfdk_aac',
-								isSelected: true
-							}
-						]
-					},
-					depends: [
-						{ key: 'ext', value: 'mp4' }
-					]
-				},
-				{
-					key  : 'c:a',
-					label: 'AUDIO CODEC'.__(),
-					input: {
-						type      : 'radio',
-						isRequired: true,
-						items     : [
-							{
-								label     : 'AAC',
-								value     : 'libfdk_aac',
-								isSelected: true
-							}
-						]
-					},
-					depends: [
-						{ key: 'ext', value: 'flv' }
 					]
 				},
 				{
@@ -432,7 +397,7 @@ P = Class.create(P, {
 
 		var getRequestURI = function() {
 
-			var r = window.location.protocol + '//' + window.location.host;
+			var r = window.location.protocol + '//' + window.location.host + window.location.pathname.replace(/\/[^\/]*$/, '');
 			r += '/api/channel/' + this.channelId + '/watch.' + d.ext;
 			var q = Object.toQueryString(d);
 

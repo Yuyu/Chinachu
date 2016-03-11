@@ -108,6 +108,7 @@ P = Class.create(P, {
 			set['b:a'] = '96k';
 		}
 
+<<<<<<< HEAD
 		var modal = this.modal = new flagrate.Modal({
 			disableCloseByMask: true,
 			disableCloseButton: true,
@@ -131,32 +132,78 @@ P = Class.create(P, {
 							}).show();
 							return;
 						}
+=======
+		var buttons = [
+			{
+				label  : '再生',
+				color  : '@pink',
+				onSelect: function(e, modal) {
+					if (this.form.validate() === false) { return; }
 
-						modal.close();
+					var d = this.d = this.form.result();
 
-						this.play();
-					}.bind(this)
-				},
-				{
-					label  : 'XSPF',
-					color  : '@orange',
-					onSelect: function(e, modal) {
-						if (this.form.validate() === false) { return; }
+					saveSettings(d);
 
-						var d = this.form.result();
+					if (d.ext === 'm2ts') {
+						new flagrate.Modal({
+							title: 'エラー',
+							text : 'MPEG-2 TSコンテナの再生はサポートしていません。'
+						}).show();
+						return;
+					}
+>>>>>>> master
 
-						saveSettings(d);
+					modal.close();
 
-						if (program._isRecording) {
-							d.prefix = window.location.protocol + '//' + window.location.host + '/api/recording/' + program.id + '/';
-							window.open('./api/recording/' + program.id + '/watch.xspf?' + Object.toQueryString(d));
-						} else {
-							d.prefix = window.location.protocol + '//' + window.location.host + '/api/recorded/' + program.id + '/';
-							window.open('./api/recorded/' + program.id + '/watch.xspf?' + Object.toQueryString(d));
-						}
-					}.bind(this)
-				}
-			]
+					this.play();
+				}.bind(this)
+			},
+			{
+				label  : 'XSPF',
+				color  : '@orange',
+				onSelect: function(e, modal) {
+					if (this.form.validate() === false) { return; }
+
+					var d = this.form.result();
+
+					saveSettings(d);
+
+					if (program._isRecording) {
+						d.prefix = window.location.protocol + '//' + window.location.host;
+						d.prefix += window.location.pathname.replace(/\/[^\/]*$/, '') + '/api/recording/' + program.id + '/';
+						window.open('./api/recording/' + program.id + '/watch.xspf?' + Object.toQueryString(d));
+					} else {
+						d.prefix = window.location.protocol + '//' + window.location.host;
+						d.prefix += window.location.pathname.replace(/\/[^\/]*$/, '') + '/api/recorded/' + program.id + '/';
+						window.open('./api/recorded/' + program.id + '/watch.xspf?' + Object.toQueryString(d));
+					}
+				}.bind(this)
+			}
+		];
+		if (! program._isRecording) {
+			buttons.push({
+				label: 'ダウンロード',
+				color: '@blue',
+				onSelect: function(e, model) {
+
+					if (this.form.validate() === false) { return; }
+
+					var d = this.form.result();
+
+					saveSettings(d);
+
+					d.prefix = window.location.protocol + '//' + window.location.host + '/api/recording/' + program.id + '/';
+					d.mode = 'download';
+					location.href = './api/recorded/' + program.id + '/watch.' + d.ext + '?' + Object.toQueryString(d);
+				}.bind(this)
+			});
+		}
+		var modal = this.modal = new flagrate.Modal({
+			disableCloseByMask: true,
+			disableCloseButton: true,
+			target: this.view.content,
+			title : 'ストリーミング再生',
+			buttons: buttons
 		}).show();
 
 		if (Prototype.Browser.MobileSafari) {
@@ -295,8 +342,8 @@ P = Class.create(P, {
 							},
 							{
 								label     : 'AAC',
-								value     : 'libfdk_aac',
-								isSelected: set['c:a'] === 'libfdk_aac'
+								value     : 'aac',
+								isSelected: set['c:a'] === 'aac'
 							},
 							{
 								label     : 'Vorbis',
@@ -325,42 +372,6 @@ P = Class.create(P, {
 					},
 					depends: [
 						{ key: 'ext', value: 'webm' }
-					]
-				},
-				{
-					key  : 'c:a',
-					label: 'AUDIO CODEC'.__(),
-					input: {
-						type      : 'radio',
-						isRequired: true,
-						items     : [
-							{
-								label     : 'AAC',
-								value     : 'libfdk_aac',
-								isSelected: true
-							}
-						]
-					},
-					depends: [
-						{ key: 'ext', value: 'mp4' }
-					]
-				},
-				{
-					key  : 'c:a',
-					label: 'AUDIO CODEC'.__(),
-					input: {
-						type      : 'radio',
-						isRequired: true,
-						items     : [
-							{
-								label     : 'AAC',
-								value     : 'libfdk_aac',
-								isSelected: true
-							}
-						]
-					},
-					depends: [
-						{ key: 'ext', value: 'flv' }
 					]
 				},
 				{
@@ -493,7 +504,7 @@ P = Class.create(P, {
 
 		var getRequestURI = function() {
 
-			var r = window.location.protocol + '//' + window.location.host;
+			var r = window.location.protocol + '//' + window.location.host + window.location.pathname.replace(/\/[^\/]*$/, '');
 			r += '/api/' + (!!p._isRecording ? 'recording' : 'recorded') + '/' + p.id + '/watch.' + d.ext;
 			var q = Object.toQueryString(d);
 
