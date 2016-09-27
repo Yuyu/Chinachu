@@ -270,6 +270,7 @@ function doRecord(program) {
 	// 録画コマンド
 	recCmd = tuner.command;
 	recCmd = recCmd.replace('<channel>', program.channel.channel);
+	recCmd = recCmd.replace('<type>', program.channel.type);
 	if (program['1seg'] === true) {
 		recCmd = recCmd.replace(' --b25', '');
 		recCmd = recCmd.replace('<sid>', '1seg');
@@ -355,6 +356,22 @@ function doRecord(program) {
 				util.log('SPAWN: ' + config.recordedCommand + ' (pid=' + postProcess.pid + ')');
 			}
 			
+                	// Tweeter (Experimental)
+                	if (tweeter && config.operTweeterFormat.end) {
+                	        tweeterUpdater(
+                	                config.operTweeterFormat.end
+						.replace('<id>', program.id)
+						.replace('<type>', program.channel.type)
+						.replace('<channel>', ((program.channel.type === 'CS') ? program.channel.sid : program.channel.channel))
+						.replace('<title>',   program.title)
+						.replace('<fullTitle>', program.fullTitle)
+						.replace('<channelname>', program.channel.name)
+						.replace('<date>', dateFormat(new Date(program.start), "mm/dd"))
+						.replace('<starttime>', dateFormat(new Date(program.start), "h:MM"))
+						.replace('<endtime>', dateFormat(new Date(program.end), "h:MM"))
+                        	);
+                	}
+			
 			finalize = null;
 		};
 		// 録画プロセス終了時処理
@@ -373,6 +390,11 @@ function doRecord(program) {
 					.replace('<type>', program.channel.type)
 					.replace('<channel>', ((program.channel.type === 'CS') ? program.channel.sid : program.channel.channel))
 					.replace('<title>',   program.title)
+					.replace('<fullTitle>', program.fullTitle)
+					.replace('<channelname>', program.channel.name)
+					.replace('<date>', dateFormat(new Date(program.start), "mm/dd"))
+					.replace('<starttime>', dateFormat(new Date(program.start), "h:MM"))
+					.replace('<endtime>', dateFormat(new Date(program.end), "h:MM"))
 			);
 		}
 	}, 0, 'RECWAIT: ' + tuner.name);
@@ -407,6 +429,11 @@ function prepRecord(program) {
 				.replace('<type>', program.channel.type)
 				.replace('<channel>', ((program.channel.type === 'CS') ? program.channel.sid : program.channel.channel))
 				.replace('<title>',   program.title)
+				.replace('<fullTitle>', program.fullTitle)
+				.replace('<channelname>', program.channel.name)
+				.replace('<date>', dateFormat(new Date(program.start), "mm/dd"))
+				.replace('<starttime>', dateFormat(new Date(program.start), "h:MM"))
+				.replace('<endtime>', dateFormat(new Date(program.end), "h:MM"))
 		);
 	}
 }
